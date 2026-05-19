@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="theme-color" content="#0f172a" id="metaThemeColor"/>
+  <title>The Ear Training Lab - Home</title>
+  <link href="shared/global.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="app">
+    
+    <header class="hero">
+      <div class="app-titleWrap">
+        <img alt="The Ear Training Lab" class="app-titleImg img-dark" src="images/hometitle.png" onerror="this.style.display='none'; document.getElementById('fallbackTitle').classList.remove('hidden');"/>
+        <img alt="The Ear Training Lab" class="app-titleImg img-light" src="images/titlelight.png" onerror="this.style.display='none'; document.getElementById('fallbackTitle').classList.remove('hidden');"/>
+        <h1 id="fallbackTitle" class="fallback-title hidden">The Ear Training Lab</h1>
+      </div>
+      
+      <div class="welcome-panel">
+        <h2 id="welcomeHeading" class="welcome-heading">Welcome to the Ear Training Lab!</h2>
+      </div>
+    </header>
+
+    <div class="top-actions-row">
+      <button id="progressBtn" class="btn primary action-btn progress-btn" type="button" onclick="window.location.href='progress/index.html'">
+        📈 Progress And Results!
+      </button>
+      <button id="settingsBtn" class="btn action-btn btn-orange icon-btn" aria-label="User and Settings" title="Settings">⚙️</button>
+      <button id="aboutBtn" class="btn action-btn btn-teal icon-btn" aria-label="About" title="Info">ℹ️</button>
+    </div>
+
+    <nav class="nav-row" aria-label="Main Navigation">
+      <button class="btn nav-btn tab-btn active" data-target="sec-games">Games</button>
+      <button class="btn nav-btn tab-btn" data-target="sec-quizzes">Quizzes</button>
+      <button class="btn nav-btn tab-btn" data-target="sec-videos">Videos</button>
+      <button class="btn nav-btn tab-btn" data-target="sec-reading">Reading</button>
+      <button class="btn nav-btn tab-btn" data-target="sec-tools">Tools</button>
+    </nav>
+
+    <main class="content-container">
+      
+      <section id="sec-games" class="content-section active">
+        <div class="filter-bar">
+          <button id="filterBtn" class="btn btn-glass-grey mini-btn" type="button">🔍 Filter</button>
+          <button id="sortBtn" class="btn btn-glass-grey mini-btn" type="button">↕️ Sort</button>
+        </div>
+
+        <div class="tile-grid" id="gamesGrid">
+          <a href="#" class="tile-btn game-tile" data-difficulty="1" data-type="pitch">Pitch Match 1</a>
+          <a href="#" class="tile-btn game-tile" data-difficulty="2" data-type="pitch">Major/Minor</a>
+          <a href="#" class="tile-btn game-tile" data-difficulty="3" data-type="rhythm">Beat Tapper</a>
+          
+          <a href="#" class="tile-btn game-tile" data-difficulty="4" data-type="pitch">Intervals 1</a>
+          <a href="#" class="tile-btn game-tile" data-difficulty="5" data-type="rhythm">Syncopation</a>
+          <a href="#" class="tile-btn game-tile" data-difficulty="6" data-type="rhythm">Rest Finder</a>
+          
+          <a href="games/relativepitchchromatic/chromaticindex.html" class="tile-btn game-tile" data-difficulty="8" data-type="pitch">Relative Pitch Game: Chromatic Notes</a>
+          <a href="#" class="tile-btn game-tile" data-difficulty="7" data-type="pitch">Modes</a>
+          <a href="#" class="tile-btn game-tile" data-difficulty="9" data-type="rhythm">Polyrhythms</a>
+        
+          <a href="#" class="tile-btn game-tile" data-difficulty="10" data-type="pitch">Microtonal Dictation</a>
+        </div>
+      </section>
+
+      <section id="sec-quizzes" class="content-section hidden">
+        <div class="tile-grid">
+          <a href="#" class="tile-btn">Quiz 1: Basics</a>
+          <a href="#" class="tile-btn">Quiz 2: Clefs</a>
+          <a href="#" class="tile-btn">Quiz 3: Time</a>
+          <a href="#" class="tile-btn">Quiz 4: Keys</a>
+          <a href="#" class="tile-btn">Quiz 5: Scales</a>
+          <a href="#" class="tile-btn">Quiz 6: Chords</a>
+          <a href="#" class="tile-btn">Quiz 7: Melody</a>
+          <a href="#" class="tile-btn">Quiz 8: Rhythm</a>
+          <a href="#" class="tile-btn">Quiz 9: Final</a>
+        </div>
+      </section>
+
+      <section id="sec-videos" class="content-section hidden">
+        <div class="tile-grid">
+          <a href="#" class="tile-btn">Vid: Pitch</a>
+          <a href="#" class="tile-btn">Vid: Rhythm</a>
+          <a href="#" class="tile-btn">Vid: Piano</a>
+          <a href="#" class="tile-btn">Vid: Guitar</a>
+          <a href="#" class="tile-btn">Vid: Vocals</a>
+          <a href="#" class="tile-btn">Vid: Theory 1</a>
+          <a href="#" class="tile-btn">Vid: Theory 2</a>
+          <a href="#" class="tile-btn">Vid: Warmups</a>
+          <a href="#" class="tile-btn">Vid: Practice</a>
+        </div>
+      </section>
+
+      <section id="sec-reading" class="content-section hidden">
+        <div class="tile-grid">
+          <a href="#" class="tile-btn">Article 1</a>
+          <a href="#" class="tile-btn">Article 2</a>
+          <a href="#" class="tile-btn">Article 3</a>
+          <a href="#" class="tile-btn">Article 4</a>
+          <a href="#" class="tile-btn">Article 5</a>
+          <a href="#" class="tile-btn">Article 6</a>
+          <a href="#" class="tile-btn">Article 7</a>
+          <a href="#" class="tile-btn">Article 8</a>
+          <a href="#" class="tile-btn">Article 9</a>
+        </div>
+      </section>
+
+      <section id="sec-tools" class="content-section hidden">
+        <div class="tile-grid">
+          <a href="#" class="tile-btn">Tool: Metronome</a>
+          <a href="#" class="tile-btn">Tool: Tuner</a>
+          <a href="#" class="tile-btn">Tool: Piano</a>
+        </div>
+      </section>
+    </main>
+    </main>
+
+    <footer class="app-footer">
+      <p>&copy; The Ear Training Lab 2026</p>
+    </footer>
+
+    <div aria-labelledby="filterTitle" aria-modal="true" class="modal hidden" id="filterModal" role="dialog">
+      <div class="modalCard modalCard-sm">
+        <h2 class="modalTitle" id="filterTitle">Filter Games</h2>
+        <div class="modalBody text-left">
+          
+          <div class="settings-group">
+            <label class="settings-label">Difficulty</label>
+            <div class="checkbox-row">
+              <input type="checkbox" id="diff-beg" class="filter-diff" value="beginner" checked>
+              <label for="diff-beg">Beginner (1-3)</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="diff-int" class="filter-diff" value="intermediate" checked>
+              <label for="diff-int">Intermediate (4-6)</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="diff-adv" class="filter-diff" value="advanced" checked>
+              <label for="diff-adv">Advanced (7-9)</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="diff-extra" class="filter-diff" value="extra-advanced" checked>
+              <label for="diff-extra">Extra Advanced (10)</label>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <label class="settings-label">Game Type</label>
+            <div class="checkbox-row">
+              <input type="checkbox" id="type-pitch" class="filter-type" value="pitch" checked>
+              <label for="type-pitch">Pitch Games</label>
+            </div>
+            <div class="checkbox-row">
+              <input type="checkbox" id="type-rhythm" class="filter-type" value="rhythm" checked>
+              <label for="type-rhythm">Rhythm Games</label>
+            </div>
+          </div>
+
+        </div>
+        <div class="modalActions">
+          <button class="btn btn-large primary btn-block" id="closeFilterBtn" type="button">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <div aria-labelledby="sortTitle" aria-modal="true" class="modal hidden" id="sortModal" role="dialog">
+      <div class="modalCard modalCard-sm">
+        <h2 class="modalTitle" id="sortTitle">Sort Games</h2>
+        <div class="modalBody text-left">
+          
+          <div class="settings-group">
+            <div class="radio-row">
+              <input type="radio" id="sort-diff-asc" name="sort-games" value="diff-asc" checked>
+              <label for="sort-diff-asc">Difficulty: Beginner to Extra Advanced</label>
+            </div>
+            <div class="radio-row">
+              <input type="radio" id="sort-diff-desc" name="sort-games" value="diff-desc">
+              <label for="sort-diff-desc">Difficulty: Extra Advanced to Beginner</label>
+            </div>
+            <div class="radio-row" style="margin-top: 12px;">
+              <input type="radio" id="sort-rhythm-first" name="sort-games" value="rhythm-first">
+              <label for="sort-rhythm-first">Type: Rhythm Games First</label>
+            </div>
+            <div class="radio-row">
+              <input type="radio" id="sort-pitch-first" name="sort-games" value="pitch-first">
+              <label for="sort-pitch-first">Type: Pitch Games First</label>
+            </div>
+          </div>
+
+        </div>
+        <div class="modalActions">
+          <button class="btn btn-large primary btn-block" id="closeSortBtn" type="button">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <div aria-labelledby="welcomeTitle" aria-modal="true" class="modal hidden" id="welcomeModal" role="dialog">
+      <div class="modalCard">
+        <h2 class="modalTitle" id="welcomeTitle">Welcome to the Ear Training Lab!</h2>
+        <div class="modalBody text-left">
+          <p>The games, quizzes, videos and content in this app are designed specifically to develop practical and purposeful musical listening skills, which compliment your overall musicianship in a way that reinforces understanding of related theory - particularly for modern pop, rock, jazz, soul and indie music, whilst also being useful for traditional classical music and other genres.</p>
+          <p>They are created by a working gigging music professional and teacher to cover beginner to professional level skills.</p>
+        </div>
+        <div class="modalActions">
+          <button class="btn btn-large primary pulse btn-block" id="welcomeEnterBtn" type="button">Enter</button>
+        </div>
+      </div>
+    </div>
+
+    <div aria-labelledby="settingsTitle" aria-modal="true" class="modal hidden" id="settingsModal" role="dialog">
+      <div class="modalCard">
+        <h2 class="modalTitle" id="settingsTitle">User & Settings</h2>
+        <div class="modalBody text-left">
+          
+          <div class="settings-group">
+            <label for="userNameInput" class="settings-label">Player Name</label>
+            <input type="text" id="userNameInput" class="text-input" placeholder="Enter your name to personalize the app" autocomplete="off" spellcheck="false"/>
+          </div>
+
+          <div class="settings-group">
+            <label class="settings-label">Appearance</label>
+            <button id="themeToggleBtn" class="btn btn-block" type="button">🌙 Switch to Light Mode</button>
+          </div>
+
+          <div class="settings-group" style="margin-top: 32px;">
+            <button id="clearDataBtn" class="btn btn-block danger-btn" type="button">⚠️ Clear All Progress & Data</button>
+          </div>
+
+        </div>
+        <div class="modalActions">
+          <button class="btn btn-large primary btn-block" id="closeSettingsBtn" type="button">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <div aria-labelledby="aboutTitle" aria-modal="true" class="modal hidden" id="aboutModal" role="dialog">
+      <div class="modalCard">
+        <h2 class="modalTitle" id="aboutTitle">About Ear Training</h2>
+        <div class="modalBody text-left">
+          <p>This section contains general information about ear training and methodology.</p>
+          <p>Regular practice using these exercises will build a strong connection between your ear, your instrument, and music theory concepts.</p>
+        </div>
+        <div class="modalActions">
+          <button class="btn btn-large primary btn-block" id="closeAboutBtn" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

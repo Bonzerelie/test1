@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="theme-color" content="#0f172a" id="metaThemeColor"/>
+  <title>Progress & Results - The Ear Training Lab</title>
+  
+  <link href="../shared/global.css" rel="stylesheet"/>
+  <link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="app">
+    
+    <header class="hero">
+      <div class="app-titleWrap">
+        <img alt="The Ear Training Lab" class="app-titleImg img-dark" src="../images/hometitle.png" onerror="this.style.display='none'; document.getElementById('fallbackTitle').classList.remove('hidden');"/>
+        <img alt="The Ear Training Lab" class="app-titleImg img-light" src="../images/titlelight.png" onerror="this.style.display='none'; document.getElementById('fallbackTitle').classList.remove('hidden');"/>
+        <h1 id="fallbackTitle" class="fallback-title hidden">The Ear Training Lab</h1>
+      </div>
+      
+      <div class="welcome-panel">
+        <h2 class="welcome-heading">Progress & Results 📈</h2>
+      </div>
+    </header>
+
+    <div class="top-actions-row">
+      <button id="homeBtn" class="btn icon-btn primary" type="button" aria-label="Home" title="Home">🏠</button>
+      <button id="resetDataBtn" class="btn danger-btn" type="button" style="flex: 1;">⚠️ Reset All Data</button>
+    </div>
+
+    <main class="content-container">
+      
+      <div id="overviewSection">
+        <section id="statsSummary" class="stats-overview">
+          <div class="stat-box">
+            <div class="stat-val" id="statGamesPlayed">0</div>
+            <div class="stat-label">Total Rounds</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="statGlobalAccuracy">0%</div>
+            <div class="stat-label">Avg. Accuracy</div>
+          </div>
+        </section>
+
+        <div class="filter-bar" style="margin-bottom: 16px;">
+          <button id="sortOverviewBtn" class="btn btn-glass-grey mini-btn" type="button">↕️ Sort Summaries</button>
+        </div>
+
+        <div id="overviewContainer" class="results-list">
+          </div>
+      </div>
+
+      <div id="detailSection" class="hidden">
+        <div class="detail-header">
+          <button id="backToOverviewBtn" class="btn btn-glass-grey mini-btn">⬅ Back to Overview</button>
+          <h2 id="detailGameTitle" class="detail-title">Game Name</h2>
+        </div>
+
+        <section class="stats-overview" style="margin-bottom: 16px;">
+          <div class="stat-box">
+            <div class="stat-val" id="detailAttempts">0</div>
+            <div class="stat-label">Attempts</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="detailBest">0%</div>
+            <div class="stat-label">Best Score</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="detailAvg">0%</div>
+            <div class="stat-label">Average</div>
+          </div>
+        </section>
+
+        <div class="chart-container">
+          <div class="chart-title">Accuracy Over Time</div>
+          <canvas id="progressChart"></canvas>
+        </div>
+
+        <div class="filter-bar" style="margin: 16px 0;">
+          <button id="sortDetailBtn" class="btn btn-glass-grey mini-btn" type="button">↕️ Sort Attempts</button>
+        </div>
+
+        <div id="detailContainer" class="results-list">
+          </div>
+      </div>
+
+      <div id="emptyState" class="hidden empty-state">
+        <p>No results found.</p>
+        <p>Complete some games to see your progress track over time!</p>
+      </div>
+
+    </main>
+
+    <footer class="app-footer">
+      <p>&copy; The Ear Training Lab 2026</p>
+    </footer>
+
+    <div aria-labelledby="sortOverviewTitle" aria-modal="true" class="modal hidden" id="sortOverviewModal" role="dialog">
+      <div class="modalCard modalCard-sm">
+        <h2 class="modalTitle" id="sortOverviewTitle">Sort Summaries</h2>
+        <div class="modalBody text-left">
+          <div class="settings-group">
+            <div class="radio-row">
+              <input type="radio" id="sort-overview-recent" name="sort-overview" value="recent" checked>
+              <label for="sort-overview-recent">Most Recently Played</label>
+            </div>
+            <div class="radio-row">
+              <input type="radio" id="sort-overview-played" name="sort-overview" value="played">
+              <label for="sort-overview-played">Most Played (Attempts)</label>
+            </div>
+            <div class="radio-row">
+              <input type="radio" id="sort-overview-acc" name="sort-overview" value="acc">
+              <label for="sort-overview-acc">Highest Average Accuracy</label>
+            </div>
+          </div>
+        </div>
+        <div class="modalActions">
+          <button class="btn btn-large primary btn-block" id="closeSortOverviewBtn" type="button">Apply Sort</button>
+        </div>
+      </div>
+    </div>
+
+    <div aria-labelledby="sortDetailTitle" aria-modal="true" class="modal hidden" id="sortDetailModal" role="dialog">
+      <div class="modalCard modalCard-sm">
+        <h2 class="modalTitle" id="sortDetailTitle">Sort Attempts</h2>
+        <div class="modalBody text-left">
+          <div class="settings-group">
+            <div class="radio-row">
+              <input type="radio" id="sort-date-desc" name="sort-detail" value="date-desc" checked>
+              <label for="sort-date-desc">Date: Newest First</label>
+            </div>
+            <div class="radio-row">
+              <input type="radio" id="sort-date-asc" name="sort-detail" value="date-asc">
+              <label for="sort-date-asc">Date: Oldest First</label>
+            </div>
+            <div class="radio-row" style="margin-top: 12px;">
+              <input type="radio" id="sort-acc-desc" name="sort-detail" value="acc-desc">
+              <label for="sort-acc-desc">Accuracy: Highest to Lowest</label>
+            </div>
+            <div class="radio-row">
+              <input type="radio" id="sort-acc-asc" name="sort-detail" value="acc-asc">
+              <label for="sort-acc-asc">Accuracy: Lowest to Highest</label>
+            </div>
+          </div>
+        </div>
+        <div class="modalActions">
+          <button class="btn btn-large primary btn-block" id="closeSortDetailBtn" type="button">Apply Sort</button>
+        </div>
+      </div>
+    </div>
+
+    <div aria-labelledby="resetTitle" aria-modal="true" class="modal hidden" id="resetModal" role="dialog">
+      <div class="modalCard modalCard-sm">
+        <h2 class="modalTitle" id="resetTitle" style="color: var(--danger);">Are you sure?</h2>
+        <div class="modalBody">
+          <p>All results data will be removed.</p>
+          <p><strong>This cannot be undone.</strong></p>
+        </div>
+        <div class="modalActions">
+          <button class="btn btn-large btn-glass-grey btn-block" id="cancelResetBtn" type="button">Back</button>
+          <button class="btn btn-large danger-btn btn-block" id="confirmResetBtn" type="button">Continue and Reset</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
