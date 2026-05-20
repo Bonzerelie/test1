@@ -11,100 +11,77 @@
 <body>
   <div class="app">
 
-    <!-- ══════════════ LEFT PANEL ══════════════ -->
-    <div class="left-panel" id="leftPanel">
-
-      <!-- App Logo -->
-      <header class="hero pm-hero">
-        <div aria-label="The Ear Training Lab" class="app-titleWrap" id="titleWrap">
-          <img alt="The Ear Training Lab" class="app-titleImg img-dark" src="../../images/hometitle.png"
-               onerror="this.style.display='none'; document.getElementById('fallbackTitle').classList.remove('hidden');"/>
-          <img alt="The Ear Training Lab" class="app-titleImg img-light" src="../../images/titlelight.png"
-               onerror="this.style.display='none'; document.getElementById('fallbackTitle').classList.remove('hidden');"/>
-          <h1 id="fallbackTitle" class="fallback-title hidden">The Ear Training Lab</h1>
+    <div class="pm-status-split-container">
+      
+      <div class="status-card-left">
+        <h2 class="gameMainTitle">Match The Pitch!</h2>
+        <div class="status-nav-inline">
+          <button id="homeBtn" class="btn icon-btn primary" type="button" aria-label="Home" title="Home">🏠</button>
+          <button id="infoBtn" class="btn icon-btn btn-teal" type="button" aria-label="Information">ℹ️</button>
         </div>
-      </header>
+      </div>
 
-      <h2 class="gameMainTitle">Pitch Match</h2>
-
-      <!-- Status -->
-      <section aria-label="status" class="statusPanel">
-        <div class="statusRow">
-          <div class="statusText">
-            <div class="phaseTitle" id="phaseTitle">Ready</div>
-            <div aria-live="polite" class="feedbackLine" id="feedbackOut">Press <strong>Begin Game</strong> to start.</div>
-          </div>
+      <div class="status-card-right">
+        <div class="statusText">
+          <span class="phaseTitle" id="phaseTitle">Ready:</span>
+          <span aria-live="polite" class="feedbackLine" id="feedbackOut">Press <strong>Begin Game</strong> to start.</span>
         </div>
-      </section>
-
-      <!-- Controls -->
-      <section aria-label="gameplay controls" class="controlsPanel">
-        <div class="actionsGrid">
-          <button id="homeBtn"   class="btn icon-btn primary"        type="button" aria-label="Home"        title="Home">🏠</button>
-          <button id="replayBtn" class="btn btn-pink flex-text-btn"  type="button" disabled>🔄 Replay</button>
-          <button id="infoBtn"   class="btn icon-btn btn-teal"       type="button" aria-label="Information">ℹ️</button>
-        </div>
-        <div class="mainActionRow">
-          <button class="btn primary pulse" id="beginBtn" type="button">Begin Game</button>
-          <button disabled id="nextBtn" class="btn next-btn" type="button">Next ➔</button>
-        </div>
-      </section>
-
-      <!-- Submit -->
-      <section aria-label="submit answer" class="submitPanel">
-        <button class="btn primary btn-block" id="submitBtn" disabled type="button">Submit Answer</button>
-      </section>
-
-      <!-- Score card -->
-      <section aria-label="score" class="analysis">
-        <div class="analysisGrid">
-          <div class="analysisCard scoreCardNarrow">
-            <div class="analysisLabel">Score Card</div>
-            <div class="scoreMeta" id="scoreMeta">Range: C3–C5</div>
-            <div class="scoreActions">
-              <input id="playerNameInput" type="text" inputmode="text" autocomplete="name" maxlength="32" placeholder="Enter your name"/>
-              <button class="btn default-btn btn-block" id="downloadScorecardBtn" type="button">Download Card</button>
-            </div>
-            <div class="scoreGrid scoreGridVertical">
-              <div class="scoreItem"><span class="scoreK">Correct</span>        <span class="scoreV text-correct"   id="correctOut">0</span></div>
-              <div class="scoreItem"><span class="scoreK">Incorrect</span>       <span class="scoreV text-incorrect" id="incorrectOut">0</span></div>
-              <div class="scoreItem"><span class="scoreK">Questions Asked</span> <span class="scoreV"               id="totalOut">0</span></div>
-              <div class="scoreItem"><span class="scoreK">Accuracy</span>        <span class="scoreV text-accent"   id="accuracyOut">0.0%</span></div>
-              <div class="scoreItem"><span class="scoreK">Streak</span>          <span class="scoreV"               id="streakOut">0</span></div>
-              <div class="scoreItem"><span class="scoreK">Best Streak</span>     <span class="scoreV"               id="bestStreakOut">0</span></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </div><!-- /.left-panel -->
-
-    <!-- ══════════════ RIGHT PANEL ══════════════ -->
-    <div class="right-panel" id="rightPanel">
-      <div class="keyboardMount" id="keyboardMount"></div>
+      </div>
+      
     </div>
 
-    <!-- ══════════════ MODALS ══════════════ -->
+    <section aria-label="gameplay controls" class="unified-controls-panel">
+      <div class="control-row">
+        <div class="action-group">
+          <button class="btn primary pulse" id="beginBtn"           type="button">Begin Game</button>
+          <button id="replayBtn" class="btn btn-pink"               type="button" disabled>🔄 Replay</button>
+          <button class="btn primary" id="submitBtn" disabled       type="button">Submit Answer</button>
+          <button disabled id="nextBtn" class="btn next-btn"        type="button">Next ➔</button>
+        </div>
+      </div>
+    </section>
 
-    <!-- Intro -->
+    <section class="game-keyboard-section" id="rightPanel">
+      <div class="keyboardMount" id="keyboardMount"></div>
+    </section>
+
+    <section aria-label="score" class="analysis unified-score-section">
+      <div class="analysisCard wideScoreCard">
+        <div class="scorecard-header-row">
+          <div class="analysisLabel">Score Card</div>
+          <div class="scoreMeta" id="scoreMeta">Range: C3–C5</div>
+          <div class="scorecard-inputs">
+            <input id="playerNameInput" type="text" inputmode="text" autocomplete="name" maxlength="32" placeholder="Enter your name"/>
+            <button class="btn default-btn" id="downloadScorecardBtn" type="button">Download Card</button>
+          </div>
+        </div>
+        
+        <div class="scoreGrid scoreGridHorizontal">
+          <div class="scoreItem"><span class="scoreK">Correct</span>        <span class="scoreV text-correct"   id="correctOut">0</span></div>
+          <div class="scoreItem"><span class="scoreK">Incorrect</span>       <span class="scoreV text-incorrect" id="incorrectOut">0</span></div>
+          <div class="scoreItem"><span class="scoreK">Questions Asked</span> <span class="scoreV"               id="totalOut">0</span></div>
+          <div class="scoreItem"><span class="scoreK">Accuracy</span>        <span class="scoreV text-accent"   id="accuracyOut">0.0%</span></div>
+          <div class="scoreItem"><span class="scoreK">Streak</span>          <span class="scoreV"               id="streakOut">0</span></div>
+          <div class="scoreItem"><span class="scoreK">Best Streak</span>     <span class="scoreV"               id="bestStreakOut">0</span></div>
+        </div>
+      </div>
+    </section>
+
     <div aria-labelledby="introTitle" aria-modal="true" class="modal" id="introModal" role="dialog">
-      <div class="modalCard">
+      <div class="modalCard introModalCard">
         <h2 class="modalGameTitle">Pitch Match</h2>
         <h2 class="modalGameSubtitle" id="introTitle">How to Play</h2>
         <div class="modalBody">
-          <p>You'll hear a single note played. Your job is to find that exact note on the piano keyboard and press <strong>Submit Answer</strong>.</p>
-          <p>The keyboard shows the full range from <strong>C3 to C5</strong> — two complete octaves. Listen for whether the note sounds low, middle, or high to help you locate it quickly.</p>
-          <p>Click any key to hear a preview of that note, then press <strong>Submit Answer</strong> when you're ready. Press <strong>R</strong> to replay the target note at any time.</p>
-          <p class="settingsHint">You must answer at least 5 questions for your score to be saved to your progress tracker.</p>
+          <p>You'll hear a note. Find it on the piano keyboard (<strong>C3 to C5</strong>) and press <strong>Submit Answer</strong>.</p>
+          <p>Click keys to preview notes. Press <strong>R</strong> to replay the target note. 5+ answers are required to track progress.</p>
         </div>
-        <div class="modalActions">
-          <button class="btn btn-large primary pulse btn-block" id="introBeginBtn" type="button">Start Training</button>
-          <button class="btn btn-large btn-orange btn-block"   id="introHomeBtn"  type="button">Back To Home</button>
+        <div class="modalActions side-by-side-actions">
+          <button class="btn btn-large btn-orange"   id="introHomeBtn"  type="button">Back To Home</button>
+          <button class="btn btn-large primary pulse" id="introBeginBtn" type="button">Advance To Game</button>
         </div>
       </div>
     </div>
 
-    <!-- Score / Round Complete -->
     <div aria-labelledby="scoreModalTitle" aria-modal="true" class="modal hidden" id="scoreModal" role="dialog">
       <div class="modalCard">
         <h2 class="modalTitle" id="scoreModalTitle">Round Complete!</h2>
@@ -130,7 +107,6 @@
       </div>
     </div>
 
-    <!-- Info -->
     <div aria-labelledby="infoTitle" aria-modal="true" class="modal hidden" id="infoModal" role="dialog">
       <div class="modalCard">
         <h2 class="modalTitle" id="infoTitle">How To Play</h2>
@@ -145,7 +121,6 @@
       </div>
     </div>
 
-    <!-- Leave game confirmation -->
     <div aria-labelledby="leaveTitle" aria-modal="true" class="modal hidden" id="leaveModal" role="dialog">
       <div class="modalCard modalCard-sm">
         <h2 class="modalTitle" id="leaveTitle" style="color: var(--danger);">Leave Game?</h2>
