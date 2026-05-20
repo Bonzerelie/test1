@@ -163,7 +163,7 @@ body.light-theme .danger-btn { box-shadow: 0 4px 0 var(--danger-shadow); }
 }
 
 .progress-btn { flex-grow: 1; justify-content: center; }
-.icon-btn { flex: 0 0 120px; padding: 0; font-size: 24px; }
+.icon-btn { flex: 0 0 110px; padding: 0; font-size: 24px; }
 
 /* Filter & Sort Bar */
 .filter-bar {
