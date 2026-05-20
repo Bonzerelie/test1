@@ -1,0 +1,423 @@
+/* =========================================================
+   LOCAL GAME STYLES: Pitch Match — Landscape Edition
+   Builds on top of ../../shared/global.css
+
+   The game forces a landscape orientation regardless of the
+   device's auto-rotation setting. The user turns their phone
+   90° anticlockwise; we counter-rotate the .app 90° CW via
+   CSS transform so content appears in landscape. Because .app
+   has a CSS transform it acts as the containing block for all
+   position:fixed children (modals), so they correctly overlay
+   the rotated area.
+
+   Layout: left panel (~40%) scrollable | right panel (~60%)
+   fixed piano keyboard showing C3–C5.
+   ========================================================= */
+
+/* ─── Game-local colour tokens ─── */
+:root {
+  --game-pink:        #f472b6;
+  --game-pink-shadow: #db2777;
+}
+
+/* ─── Body lock (prevents any page-level scroll/bounce) ─── */
+body {
+  overflow: hidden;
+}
+
+/* ─── Force landscape via 90° CW rotation ─── */
+/*
+   dvw = portrait width  (short side, e.g. 390 px) = landscape height
+   dvh = portrait height (long  side, e.g. 844 px) = landscape width
+
+   We swap them: .app becomes 844 px wide × 390 px tall.
+   Centering it in the 390 × 844 portrait viewport then rotating
+   90° CW makes it fill the screen in forced-landscape orientation.
+*/
+body .app {
+  /* Override global column-layout .app */
+  position: fixed !important;
+  width:  100dvh !important;   /* landscape width  = portrait height */
+  height: 100dvw !important;   /* landscape height = portrait width  */
+  top:  calc((100dvh - 100dvw) / 2) !important;
+  left: calc((100dvw - 100dvh) / 2) !important;
+  transform-origin: center center !important;
+  transform: rotate(90deg) !important;
+  overflow: hidden !important;
+
+  /* Two-column row layout */
+  max-width:  none !important;
+  min-height: unset !important;
+  margin:  0 !important;
+  padding: 0 !important;
+  gap:     0 !important;
+  display:         flex !important;
+  flex-direction:  row !important;
+  align-items:     stretch !important;
+}
+
+/* ─── Left Panel (title, status, controls, score) ─── */
+.left-panel {
+  width: 40%;
+  min-width: 150px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 8px 10px 12px;
+  border-right: 2px solid var(--bg-elevated);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* ─── Right Panel (full-range keyboard) ─── */
+.right-panel {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--bg-base);
+}
+
+/* ─── Compact hero / logo in left panel ─── */
+.pm-hero {
+  padding: 0 !important;
+  margin:  0 !important;
+  text-align: center;
+}
+.pm-hero .app-titleWrap {
+  min-height: auto !important;
+  padding: 4px 0 2px;
+}
+.pm-hero .app-titleImg {
+  width: auto;
+  max-width: 100%;
+}
+
+/* ─── Game title ─── */
+.gameMainTitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+/* ─── Status area ─── */
+.statusPanel {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-soft);
+}
+
+.statusRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statusText {
+  text-align: center;
+  width: 100%;
+  background: var(--bg-base);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+}
+body.light-theme .statusText {
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.phaseTitle {
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.feedbackLine {
+  font-size: 13px;
+  color: var(--text-muted);
+  min-height: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Highlight keywords in feedback */
+.feedbackLine strong {
+  color: #fff;
+  font-weight: 800;
+  background: var(--accent);
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+body.light-theme .feedbackLine strong { color: #fff; }
+
+/* ─── Controls panel ─── */
+.controlsPanel {
+  background: var(--bg-surface);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 10px 10px;
+  box-shadow: var(--shadow-soft);
+}
+body.light-theme .controlsPanel {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Compact buttons in left panel */
+.left-panel .btn {
+  height: 46px;
+}
+
+.actionsGrid {
+  display: flex;
+  gap: 7px;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.actionsGrid .icon-btn {
+  flex: 0 0 46px;
+  height: 46px;
+  padding: 0;
+  font-size: 20px;
+}
+
+.actionsGrid .flex-text-btn {
+  flex: 1 1 0;
+  padding: 0 4px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.mainActionRow {
+  display: flex;
+  gap: 8px;
+}
+
+/* Begin takes 2× the width of Next */
+.mainActionRow #beginBtn { flex: 2; }
+.mainActionRow #nextBtn  { flex: 1; }
+
+/* ─── Submit panel ─── */
+.submitPanel {
+  width: 100%;
+}
+
+.submitPanel #submitBtn {
+  width: 100%;
+  height: 46px;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+/* ─── Local button variants ─── */
+.btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-pink {
+  background: var(--game-pink);
+  color: #fff;
+  border: 2px solid var(--game-pink-shadow);
+  box-shadow: 0 4px 0 var(--game-pink-shadow);
+}
+
+#replayBtn.pulse {
+  --ringColor: rgba(244, 114, 182, 0.4);
+}
+
+.default-btn {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border: 2px solid transparent;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+body.light-theme .default-btn { box-shadow: 0 4px 0 #cbd5e1; }
+
+.secondary-btn {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border: 2px solid var(--bg-elevated);
+  box-shadow: 0 4px 0 var(--bg-elevated);
+  font-size: 14px;
+}
+.secondary-btn:active:not(:disabled) {
+  box-shadow: 0 0px 0 var(--bg-elevated);
+  transform: translateY(4px);
+}
+
+/* Next button */
+.next-btn {
+  background: var(--bg-base);
+  color: var(--text-main);
+  border: 2px solid var(--bg-elevated);
+  box-shadow: 0 4px 0 var(--bg-elevated);
+}
+.next-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.nextReady {
+  background: var(--next-orange) !important;
+  color: #fff !important;
+  border-color: var(--next-shadow) !important;
+  box-shadow: 0 4px 0 var(--next-shadow) !important;
+  --ringColor: rgba(255, 127, 42, 0.4);
+  animation: ringPulse 1.5s ease-in-out infinite;
+}
+.nextReady:active:not(:disabled) {
+  box-shadow: 0 0px 0 var(--next-shadow) !important;
+  transform: translateY(4px);
+}
+
+/* ─── Keyboard mount (right panel) ─── */
+.keyboardMount {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyboardMount svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* ─── Score & analysis (compact for left panel) ─── */
+.analysis       { padding: 0; background: transparent; border: none; box-shadow: none; }
+.analysisGrid   { display: grid; gap: 8px; }
+.scoreCardNarrow { max-width: 100%; }
+
+.inside-modal   { background: transparent; border: none; box-shadow: none; padding: 0; }
+
+.analysisCard {
+  background: var(--bg-surface);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 12px 12px;
+  box-shadow: var(--shadow-soft);
+}
+body.light-theme .analysisCard {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.analysisLabel {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+.scoreMeta {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.scoreActions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.scoreGrid         { display: grid; gap: 5px; }
+.scoreGridVertical { grid-template-columns: 1fr; }
+
+.scoreItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 10px;
+  background: var(--bg-base);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--bg-elevated);
+}
+
+.scoreK { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+.scoreV { font-size: 17px; font-weight: 900; }
+
+.text-correct   { color: var(--info-teal); }
+.text-incorrect { color: var(--danger); }
+.text-accent    { color: var(--accent); }
+
+/* ─── Inputs & selects in left panel ─── */
+.left-panel input:not([type="checkbox"]):not([type="radio"]) {
+  width: 100%;
+  height: 42px;
+  background: var(--bg-base);
+  border: 2px solid var(--bg-elevated);
+  color: var(--text-main);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 700;
+  outline: none;
+  -webkit-appearance: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.left-panel input:focus {
+  border-color: var(--accent);
+}
+
+/* ─── Modal size constraints for rotated viewport ─── */
+/*
+   In the rotated layout, the .app's pre-transform coordinate space is
+   844 px wide × 390 px tall. Modals fill inset:0 of .app.
+   Pre-transform HEIGHT becomes visual WIDTH after rotation, so we must
+   keep max-height ≤ ~380 px to prevent overflow on the short screen axis.
+   Pre-transform WIDTH becomes visual HEIGHT (safe up to ~840 px).
+*/
+body .modal .modalCard {
+  max-height: calc(100dvw - 28px);  /* dvw = portrait width = visual width post-rotation */
+  max-width:  calc(100dvh - 48px);  /* dvh = portrait height = visual height post-rotation */
+  overflow-y: auto;
+}
+
+/* ─── Modal titles (compact) ─── */
+.modalGameTitle {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.modalGameSubtitle {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.settingsHint {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 4px;
+  margin-bottom: 0;
+}

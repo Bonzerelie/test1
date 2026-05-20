@@ -1,0 +1,470 @@
+/* =========================================
+   LOCAL GAME STYLES: Higher Or Lower
+   Builds on top of ../../shared/global.css
+   ========================================= */
+
+:root {
+  /* Game-local replay button colour */
+  --game-pink:        #f472b6;
+  --game-pink-shadow: #db2777;
+
+  /* Per-answer-button accent colours */
+  --answer-higher:        #4086f6;
+  --answer-higher-shadow: #245cb0;
+  --answer-same:          #7c3aed;
+  --answer-same-shadow:   #5b21b6;
+  --answer-lower:         #f59e0b;
+  --answer-lower-shadow:  #b45309;
+}
+
+/* ─── Game title ─── */
+.gameMainTitle {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text-main);
+  margin: 0;
+  padding: 0 12px;
+}
+
+.modalGameTitle {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  line-height: 20px;
+}
+
+.modalGameSubtitle {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ─── Layout panels ─── */
+.statusPanel {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+}
+
+.controlsPanel,
+.analysisCard {
+  background: var(--bg-surface);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  box-shadow: var(--shadow-soft);
+}
+
+body.light-theme .controlsPanel,
+body.light-theme .analysisCard {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.answerPanel {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* ─── Status area ─── */
+.statusRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statusText {
+  text-align: center;
+  width: 100%;
+  background: var(--bg-base);
+  padding: 16px 20px;
+  border-radius: var(--radius-sm);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+body.light-theme .statusText {
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.phaseTitle {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.feedbackLine {
+  font-size: 15px;
+  color: var(--text-muted);
+  min-height: 22px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Highlight keywords in feedback */
+.feedbackLine strong {
+  color: #fff;
+  font-weight: 800;
+  background: var(--accent);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+body.light-theme .feedbackLine strong { color: #fff; }
+
+/* ─── Controls grid ─── */
+.actionsGrid {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.actionsGrid .icon-btn {
+  flex: 0 0 52px;
+  height: 52px;
+  padding: 0;
+  font-size: 22px;
+}
+
+.actionsGrid .flex-text-btn {
+  flex: 1 1 0;
+  padding: 0 4px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.mainActionRow {
+  display: flex;
+  gap: 12px;
+}
+
+/* Begin takes 2× the width of Next */
+.mainActionRow #beginBtn { flex: 2; }
+.mainActionRow #nextBtn  { flex: 1; }
+
+/* ─── Local button variants ─── */
+/* General disabled state for all .btn elements in this game */
+.btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-pink {
+  background: var(--game-pink);
+  color: #fff;
+  border: 2px solid var(--game-pink-shadow);
+  box-shadow: 0 4px 0 var(--game-pink-shadow);
+}
+
+#replayBtn.pulse {
+  --ringColor: rgba(244, 114, 182, 0.4);
+}
+
+.default-btn {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border: 2px solid transparent;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+body.light-theme .default-btn { box-shadow: 0 4px 0 #cbd5e1; }
+
+.secondary-btn {
+  background: var(--bg-elevated);
+  color: var(--text-main);
+  border: 2px solid var(--bg-elevated);
+  box-shadow: 0 4px 0 var(--bg-elevated);
+  font-size: 15px;
+}
+.secondary-btn:active:not(:disabled) {
+  box-shadow: 0 0px 0 var(--bg-elevated);
+  transform: translateY(4px);
+}
+
+/* Next button */
+.next-btn {
+  background: var(--bg-base);
+  color: var(--text-main);
+  border: 2px solid var(--bg-elevated);
+  box-shadow: 0 4px 0 var(--bg-elevated);
+}
+.next-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.nextReady {
+  background: var(--next-orange) !important;
+  color: #fff !important;
+  border-color: var(--next-shadow) !important;
+  box-shadow: 0 4px 0 var(--next-shadow) !important;
+  --ringColor: rgba(255, 127, 42, 0.4);
+  animation: ringPulse 1.5s ease-in-out infinite;
+}
+.nextReady:active:not(:disabled) {
+  box-shadow: 0 0px 0 var(--next-shadow) !important;
+  transform: translateY(4px);
+}
+
+/* ─── Answer buttons ─── */
+.holAnswerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.answerBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 84px;
+  gap: 5px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-main);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  border: 2px solid var(--bg-elevated);
+  box-shadow: 0 4px 0 var(--bg-elevated);
+  transition: transform 0.1s, box-shadow 0.1s, background-color 0.12s;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.answerBtn:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 0px 0 var(--bg-elevated);
+}
+
+.answerIcon { font-size: 24px; line-height: 1; }
+.answerLabel { font-size: 14px; font-weight: 900; }
+
+/* Idle enabled colours — each direction has its own hue */
+#higherBtn:not(:disabled):not(.answer-correct):not(.answer-incorrect):not(.answer-reveal) {
+  background: var(--answer-higher);
+  color: #fff;
+  border-color: var(--answer-higher-shadow);
+  box-shadow: 0 4px 0 var(--answer-higher-shadow);
+}
+
+#sameBtn:not(:disabled):not(.answer-correct):not(.answer-incorrect):not(.answer-reveal) {
+  background: var(--answer-same);
+  color: #fff;
+  border-color: var(--answer-same-shadow);
+  box-shadow: 0 4px 0 var(--answer-same-shadow);
+}
+
+#lowerBtn:not(:disabled):not(.answer-correct):not(.answer-incorrect):not(.answer-reveal) {
+  background: var(--answer-lower);
+  color: #fff;
+  border-color: var(--answer-lower-shadow);
+  box-shadow: 0 4px 0 var(--answer-lower-shadow);
+}
+
+/* Disabled — grey out (no answer state yet) */
+.answerBtn:disabled {
+  opacity: 0.38;
+  cursor: default;
+  transform: none !important;
+  background: var(--bg-surface) !important;
+  color: var(--text-muted) !important;
+  border-color: var(--bg-elevated) !important;
+  box-shadow: 0 4px 0 var(--bg-elevated) !important;
+}
+
+/* Post-answer visual feedback — override disabled grey */
+.answerBtn.answer-correct,
+.answerBtn.answer-correct:disabled {
+  background: var(--info-teal) !important;
+  border-color: var(--info-shadow) !important;
+  box-shadow: 0 4px 0 var(--info-shadow) !important;
+  color: #fff !important;
+  opacity: 1 !important;
+  cursor: default;
+}
+
+/* Correct answer revealed when player was wrong */
+.answerBtn.answer-reveal,
+.answerBtn.answer-reveal:disabled {
+  background: var(--info-teal) !important;
+  border-color: var(--info-shadow) !important;
+  box-shadow: 0 4px 0 var(--info-shadow) !important;
+  color: #fff !important;
+  opacity: 1 !important;
+  cursor: default;
+}
+
+.answerBtn.answer-incorrect,
+.answerBtn.answer-incorrect:disabled {
+  background: var(--danger) !important;
+  border-color: var(--danger-shadow) !important;
+  box-shadow: 0 4px 0 var(--danger-shadow) !important;
+  color: #fff !important;
+  opacity: 1 !important;
+  cursor: default;
+}
+
+/* ─── Mini keyboard section ─── */
+.keyboardSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.miniLegend {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.legendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-right: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.legendFirst  { background: var(--accent); }
+.legendSecond { background: var(--info-teal); }
+
+.mount { overflow: hidden; width: 100%; }
+.mount svg { display: block; margin: 0 auto; width: 100%; height: auto; }
+
+.miniMount {
+  min-height: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: var(--bg-base);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--bg-elevated);
+  padding: 14px;
+}
+
+/* Placeholder shown before the player answers */
+.kbPlaceholder {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+  opacity: 0.7;
+  padding: 0 12px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ─── Score & analysis ─── */
+.analysis      { padding: 0; background: transparent; border: none; box-shadow: none; }
+.analysisGrid  { display: grid; gap: 10px; }
+.scoreCardNarrow { max-width: 100%; }
+
+.inside-modal  { background: transparent; border: none; box-shadow: none; padding: 0; }
+
+.analysisLabel {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text-main);
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.scoreMeta {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.scoreActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.scoreGrid         { display: grid; gap: 8px; }
+.scoreGridVertical { grid-template-columns: 1fr; }
+
+.scoreItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--bg-base);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--bg-elevated);
+}
+
+.scoreK { font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.scoreV { font-size: 20px; font-weight: 900; }
+
+.text-correct   { color: var(--info-teal); }
+.text-incorrect { color: var(--danger); }
+.text-accent    { color: var(--accent); }
+
+/* ─── Inputs & selects ─── */
+input:not([type="checkbox"]):not([type="radio"]),
+select {
+  width: 100%;
+  height: 50px;
+  background: var(--bg-base);
+  border: 2px solid var(--bg-elevated);
+  color: var(--text-main);
+  border-radius: var(--radius-sm);
+  padding: 0 16px;
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 700;
+  outline: none;
+  -webkit-appearance: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:focus,
+select:focus { border-color: var(--accent); }
+select       { cursor: pointer; }
+
+.inlineControl { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.compactSelect { cursor: pointer; }
+
+/* ─── Settings modal layout ─── */
+.settingsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.settingsLabel {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.settingsHint {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
