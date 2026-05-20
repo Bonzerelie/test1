@@ -199,33 +199,32 @@ body.light-theme .btn-teal { box-shadow: 0 4px 0 var(--info-shadow); }
 
 /* Semi-transparent Grey Buttons */
 .btn-glass-grey {
-  background: rgba(203, 213, 225, 0.15); /* Light translucent grey for dark mode */
+  background: rgba(203, 213, 225, 0.15); 
   color: var(--text-main);
   border: 2px solid rgba(203, 213, 225, 0.3);
   box-shadow: 0 4px 0 rgba(203, 213, 225, 0.3);
 }
 body.light-theme .btn-glass-grey {
-  background: rgba(148, 163, 184, 0.25); /* Slate translucent grey for light mode */
+  background: rgba(148, 163, 184, 0.25); 
   border-color: rgba(148, 163, 184, 0.5);
   box-shadow: 0 4px 0 rgba(148, 163, 184, 0.5);
 }
 
 /* --- Navigation Tabs --- */
-/* --- Navigation Tabs --- */
 .nav-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px; /* Reduced slightly from 8px to save horizontal space */
+  gap: 6px; 
   justify-content: center;
 }
 
 .nav-btn {
   flex: 1 1 auto;
-  min-width: 48px; /* Reduced from 70px to allow the buttons to shrink more */
-  font-size: 13px; /* Scaled down slightly to fit all 5 labels */
-  padding: 0 6px;  /* Narrowed padding to override the default 16px */
+  min-width: 48px; 
+  font-size: 13px; 
+  padding: 0 6px;  
 }
-/* Updated borders to match shadow colors */
+
 .tab-btn {
   background: var(--muted-blue);
   color: #fff;
@@ -233,7 +232,6 @@ body.light-theme .btn-glass-grey {
   box-shadow: 0 4px 0 var(--muted-blue-shadow);
 }
 
-/* Updated Active Color (Blue Green) and Light Mode shadow fix */
 .tab-btn.active { 
   background: var(--active-teal); 
   border-color: var(--active-teal-shadow); 
@@ -254,8 +252,16 @@ body.light-theme .tab-btn.active {
 
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 12px;
+  /* Min 3 columns. minmax(0, 1fr) ensures content NEVER breaks the grid width */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 8px;
+}
+
+/* Switches to 4 columns when the screen allows */
+@media (min-width: 520px) {
+  .tile-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .tile-btn {
@@ -263,7 +269,14 @@ body.light-theme .tab-btn.active {
   aspect-ratio: 1 / 1; 
   background: var(--bg-surface); color: var(--text-main); text-decoration: none;
   border: 2px solid var(--bg-elevated); border-radius: var(--radius-md);
-  font-size: 18px; font-weight: 900; padding: 8px;
+  
+  /* Dynamic font size, wrapping, and hyphenation to handle narrow columns */
+  font-size: clamp(12px, 3.5vw, 15px); font-weight: 900; padding: 6px; line-height: 1.2;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  flex-direction: column;
+  
   box-shadow: 0 6px 0 var(--bg-elevated);
   transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s, border-color 0.2s;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
@@ -273,7 +286,7 @@ body.light-theme .tab-btn.active {
 
 /* Category Heading inside the grid */
 .category-title {
-  grid-column: 1 / -1; /* Spans full width of the grid */
+  grid-column: 1 / -1; 
   font-size: 18px;
   font-weight: 800;
   color: var(--text-muted);
@@ -329,7 +342,6 @@ body.light-theme .tab-btn.active {
   animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* New modifier for smaller modals (Filter & Sort) */
 .modalCard-sm {
   max-width: 360px;
   padding: 20px 16px;
