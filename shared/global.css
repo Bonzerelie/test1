@@ -163,7 +163,7 @@ body.light-theme .danger-btn { box-shadow: 0 4px 0 var(--danger-shadow); }
 }
 
 .progress-btn { flex-grow: 1; justify-content: center; }
-.icon-btn { flex: 0 0 78px; padding: 0; font-size: 24px; }
+.icon-btn { flex: 0 0 120px; padding: 0; font-size: 24px; }
 
 /* Filter & Sort Bar */
 .filter-bar {
@@ -211,19 +211,20 @@ body.light-theme .btn-glass-grey {
 }
 
 /* --- Navigation Tabs --- */
+/* --- Navigation Tabs --- */
 .nav-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px; /* Reduced slightly from 8px to save horizontal space */
   justify-content: center;
 }
 
 .nav-btn {
   flex: 1 1 auto;
-  min-width: 60px;
-  font-size: 14px;
+  min-width: 48px; /* Reduced from 70px to allow the buttons to shrink more */
+  font-size: 13px; /* Scaled down slightly to fit all 5 labels */
+  padding: 0 6px;  /* Narrowed padding to override the default 16px */
 }
-
 /* Updated borders to match shadow colors */
 .tab-btn {
   background: var(--muted-blue);
@@ -254,7 +255,7 @@ body.light-theme .tab-btn.active {
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-  gap: 16px;
+  gap: 12px;
 }
 
 .tile-btn {
@@ -262,7 +263,7 @@ body.light-theme .tab-btn.active {
   aspect-ratio: 1 / 1; 
   background: var(--bg-surface); color: var(--text-main); text-decoration: none;
   border: 2px solid var(--bg-elevated); border-radius: var(--radius-md);
-  font-size: 18px; font-weight: 900; padding: 12px;
+  font-size: 18px; font-weight: 900; padding: 8px;
   box-shadow: 0 6px 0 var(--bg-elevated);
   transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s, border-color 0.2s;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
