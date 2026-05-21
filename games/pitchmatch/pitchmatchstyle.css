@@ -25,16 +25,16 @@ body {
 }
 
 /* ─── Force landscape via 90° CW rotation ─── */
+/* IMPORTANT: use vh/vw (not dvh/dvw) for position:fixed elements.
+   dvh = dynamic viewport (excludes browser chrome like address bar),
+   which makes the app shorter than the physical screen on Android Chrome.
+   vh/vw on a position:fixed element references the full visual viewport. */
 body .app {
   position: fixed !important;
-  width:  100vh !important;    /* fallback for older browsers */
-  width:  100dvh !important;   /* landscape width  = portrait height */
-  height: 100vw !important;    /* fallback for older browsers */
-  height: 100dvw !important;   /* landscape height = portrait width  */
+  width:  100vh !important;
+  height: 100vw !important;
   top:  calc((100vh - 100vw) / 2) !important;
-  top:  calc((100dvh - 100dvw) / 2) !important;
   left: calc((100vw - 100vh) / 2) !important;
-  left: calc((100dvw - 100dvh) / 2) !important;
   transform-origin: center center !important;
   transform: rotate(90deg) !important;
   
@@ -42,6 +42,8 @@ body .app {
   overflow-y: auto !important;
   overflow-x: hidden !important;
   -webkit-overflow-scrolling: touch;
+  overflow-anchor: none !important;   /* Prevents DOM changes (button enable/disable) from nudging scroll */
+  overscroll-behavior: none !important; /* Prevents iOS bounce at scroll boundaries */
 
   /* Stack sections linearly down the screen */
   max-width:  none !important;
@@ -218,6 +220,7 @@ body.light-theme .unified-controls-panel {
   display: flex;
   align-items: center;
   justify-content: center;
+  touch-action: manipulation; /* Allow taps but block scroll/zoom gestures on the keyboard */
 }
 
 .keyboardMount svg {
@@ -354,23 +357,32 @@ body.light-theme .wideScoreCard {
 }
 
 /* ─── Modals Sizing & Constraints ─── */
-/* In the rotated landscape context, the pre-rotation x-axis maps to the user's
-   physical top-bottom. flex-start places the card at pre-rotation left = physical top. */
+/* Coordinate mapping after 90° CW CSS rotation (user rotates phone 90° CCW):
+     App x-axis (left→right) maps to landscape RIGHT→LEFT
+     App y-axis (top→bottom) maps to landscape BOTTOM→TOP
+   So "landscape top" = pre-rotation BOTTOM = align-items: flex-end (cross-axis on row flex).
+   justify-content: center keeps the card centred in the landscape left-right direction. */
 body .modal {
-  justify-content: flex-start !important;
-  align-items: center !important;
+  align-items: flex-start !important; /* pre-rotation top = physical landscape top */
+  justify-content: center !important; /* centred in landscape left-right */
   padding: 14px !important;
 }
 
+/* Intro modal stays fully centred in both axes */
+body #introModal {
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 body .modal .modalCard {
-  max-height: calc(100dvw - 28px);
-  max-width:  calc(100dvh - 32px);
+  max-height: calc(100vw - 28px);   /* landscape height = portrait width */
+  max-width:  calc(100vh - 32px);   /* landscape width  = portrait height */
   overflow-y: auto;
   padding: 12px;
 }
 
 .introModalCard {
-  max-height: calc(100dvw - 20px) !important;
+  max-height: calc(100vw - 20px) !important;
 }
 
 .introModalCard .modalBody p {
@@ -414,6 +426,35 @@ body .modal .modalCard {
   border: none;
   box-shadow: none;
   padding: 0;
+}
+
+/* Score modal name + download row — mirrors the main scorecard layout */
+.inside-modal .scoreActions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.inside-modal .scoreActions input {
+  flex: 1;
+  height: 32px;
+  background: var(--bg-base);
+  border: 2px solid var(--bg-elevated);
+  color: var(--text-main);
+  border-radius: var(--radius-sm);
+  padding: 0 8px;
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 700;
+  outline: none;
+}
+
+.inside-modal .scoreActions .default-btn {
+  height: 32px;
+  font-size: 12px;
+  padding: 0 12px;
+  flex-shrink: 0;
 }
 .scoreGridVertical {
   grid-template-columns: 1fr;

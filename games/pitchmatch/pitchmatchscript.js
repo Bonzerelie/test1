@@ -367,7 +367,7 @@
     if (!el) return;
     el.classList.add("hidden");
     updateControls();
-    if (lastFocus) { try { lastFocus.focus(); } catch {} }
+    if (lastFocus) { try { lastFocus.focus({ preventScroll: true }); } catch {} }
   }
 
 
@@ -381,10 +381,10 @@
     if (!keyboardMount) return;
     keyboardMount.innerHTML = "";
 
-    const WHITE_W = 32;
-    const WHITE_H = 160;
-    const BLACK_W = 21;
-    const BLACK_H = 100;
+    const WHITE_W = 56;
+    const WHITE_H = 212;
+    const BLACK_W = 34;
+    const BLACK_H = 138;
 
     // viewBox: 15 white keys wide × WHITE_H tall
     // Aspect ratio ≈ 1.333:1 — fills the right panel on typical mobile screens.
@@ -407,10 +407,10 @@
     const styleEl = svgEl("style");
     styleEl.textContent = `
       .pm-w rect { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; transition: fill 0.12s; cursor: pointer; }
-      .pm-w text { font-family: var(--font-main, sans-serif); font-size: 13px; fill: #334155;
+      .pm-w text { font-family: var(--font-main, sans-serif); font-size: 15px; fill: #334155;
                    pointer-events: none; font-weight: 900; }
       .pm-b rect { fill: #0f172a; stroke: #000000; stroke-width: 2; transition: fill 0.12s; cursor: pointer; }
-      .pm-b text { font-family: var(--font-main, sans-serif); font-size: 9px; fill: #cbd5e1;
+      .pm-b text { font-family: var(--font-main, sans-serif); font-size: 11px; fill: #cbd5e1;
                    pointer-events: none; font-weight: 700; }
 
       .pm-key.chosen.pm-w rect { fill: #dbeafe !important; stroke: #3b82f6 !important; stroke-width: 4; }
@@ -451,7 +451,7 @@
       const label = pc === 0 ? `C${oct}` : PC_NAMES_SHARP[pc];
       const txt = svgEl("text", {
         x: x + WHITE_W / 2,
-        y: WHITE_H - 12,
+        y: WHITE_H - 14,
         "text-anchor": "middle",
       });
       txt.textContent = label;
@@ -476,7 +476,7 @@
       // Sharp name label near the bottom of the black key
       const txt = svgEl("text", {
         x: x + BLACK_W / 2,
-        y: BLACK_H - 10,
+        y: BLACK_H - 12,
         "text-anchor": "middle",
       });
       txt.textContent = PC_NAMES_SHARP[pc];
@@ -700,7 +700,7 @@
       renderScore();
       updateControls();
       openModal(introModal);
-      try { introBeginBtn.focus(); } catch {}
+      try { introBeginBtn.focus({ preventScroll: true }); } catch {}
     });
   }
 
@@ -744,7 +744,7 @@
     scoreModalCallback = onContinue;
     renderScore();
     openModal(scoreModal);
-    try { scoreModalContinueBtn.focus(); } catch {}
+    try { scoreModalContinueBtn.focus({ preventScroll: true }); } catch {}
   }
 
 
@@ -916,7 +916,7 @@
         if (phaseTitle)  phaseTitle.textContent = "Ready";
         if (feedbackOut) feedbackOut.innerHTML  = `Press <strong>Begin Game</strong> to start.`;
         updateControls();
-        try { beginBtn.focus(); } catch {}
+        try { beginBtn.focus({ preventScroll: true }); } catch {}
       }
     });
     introHomeBtn.addEventListener("click", () => {
@@ -1017,7 +1017,31 @@
 
     // Show intro modal on load
     openModal(introModal);
-    try { introBeginBtn.focus(); } catch {}
+    try { introBeginBtn.focus({ preventScroll: true }); } catch {}
+
+    // ── Landscape touch-scroll handler ────────────────────────
+    // The .app is rotated 90° CW so its overflow-y axis appears
+    // horizontal on the physical screen. Map horizontal finger
+    // swipes (screen x) → app.scrollTop so the user can scroll
+    // the landscape layout naturally (swipe left = scroll down).
+    const appEl = document.querySelector(".app");
+    let touchDrag = null;
+
+    appEl.addEventListener("touchstart", e => {
+      // Ignore touches that begin on the keyboard or any modal
+      if (e.target.closest("#keyboardMount") || e.target.closest(".modal")) return;
+      touchDrag = { startX: e.touches[0].clientX, startTop: appEl.scrollTop };
+    }, { passive: true });
+
+    appEl.addEventListener("touchmove", e => {
+      if (!touchDrag || anyModalOpen()) return;
+      const dx = e.touches[0].clientX - touchDrag.startX;
+      // Left swipe (dx < 0) → scroll down; right swipe → scroll up
+      appEl.scrollTop = touchDrag.startTop - dx;
+    }, { passive: true });
+
+    appEl.addEventListener("touchend",    () => { touchDrag = null; }, { passive: true });
+    appEl.addEventListener("touchcancel", () => { touchDrag = null; }, { passive: true });
   }
 
   init();
