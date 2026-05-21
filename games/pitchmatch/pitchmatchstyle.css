@@ -27,9 +27,13 @@ body {
 /* ─── Force landscape via 90° CW rotation ─── */
 body .app {
   position: fixed !important;
+  width:  100vh !important;    /* fallback for older browsers */
   width:  100dvh !important;   /* landscape width  = portrait height */
+  height: 100vw !important;    /* fallback for older browsers */
   height: 100dvw !important;   /* landscape height = portrait width  */
+  top:  calc((100vh - 100vw) / 2) !important;
   top:  calc((100dvh - 100dvw) / 2) !important;
+  left: calc((100vw - 100vh) / 2) !important;
   left: calc((100dvw - 100dvh) / 2) !important;
   transform-origin: center center !important;
   transform: rotate(90deg) !important;
@@ -350,9 +354,17 @@ body.light-theme .wideScoreCard {
 }
 
 /* ─── Modals Sizing & Constraints ─── */
+/* In the rotated landscape context, the pre-rotation x-axis maps to the user's
+   physical top-bottom. flex-start places the card at pre-rotation left = physical top. */
+body .modal {
+  justify-content: flex-start !important;
+  align-items: center !important;
+  padding: 14px !important;
+}
+
 body .modal .modalCard {
-  max-height: calc(100dvw - 16px); 
-  max-width:  calc(100dvh - 32px); 
+  max-height: calc(100dvw - 28px);
+  max-width:  calc(100dvh - 32px);
   overflow-y: auto;
   padding: 12px;
 }
